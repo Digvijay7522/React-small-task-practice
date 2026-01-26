@@ -1,12 +1,24 @@
-import React from 'react'
+import React, { useState } from 'react'
 
   import { Button } from "@/components/ui/button"
 import { Field } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
+import { NavLink } from 'react-router-dom'
 
 
-function Header() {
+
+function Header(props) {
+    const [input, setInput]=useState('')
+
+    function onchangehandler(e){
+        setInput(e.target.value)
+    }
+
+    function onclickhandler(e){
+  props.filterData(input)
+    }
   return (
+
     <>
     {/* 1. Grid layout: Mobile pe 1 column, Desktop pe 2. Height auto rakhi hai padding ke saath */}
 <div className='bg-[color-mix(in_srgb,var(--color-blue-500),white)] grid grid-cols-1 md:grid-cols-2 min-h-[40vh] py-25 px-6 gap-10'>
@@ -16,17 +28,17 @@ function Header() {
         {/* Search Field: Mobile pe full width, Desktop pe max-width taaki bahut bada na dikhe */}
         <div className='w-full max-w-md'>
             <Field orientation="horizontal" className="flex gap-2">
-                <Input type="search" placeholder="Search..." className="bg-white" />
-                <Button className='cursor-pointer hover:bg-white transition-colors'>Search</Button>
+                <Input type="search"  value={input} onChange={onchangehandler} placeholder="Search..." className="bg-white" />
+                <NavLink to='/search'><Button onClick={onclickhandler} className='cursor-pointer hover:bg-blue-700 transition-colors'>Search</Button></NavLink>
             </Field>
         </div>
 
         {/* Buttons Row: 'flex-wrap' zaroori hai taaki mobile pe buttons niche aa jayein */}
         <div className='flex flex-wrap justify-center mt-12 gap-4 '>
-            <Button className='cursor-pointer hover:bg-blue-600 transition-colors p-3'>ADD</Button>
-            <Button className='cursor-pointer hover:bg-blue-600 transition-colors p-3'>DELETE</Button>
-            <Button className='cursor-pointer hover:bg-blue-600 transition-colors p-3'>UPDATE</Button>
-            <Button className='cursor-pointer hover:bg-blue-600 transition-colors p-3 whitespace-nowrap'>GET ALL PRODUCT</Button>
+            <NavLink to='/add'><Button className='cursor-pointer hover:bg-blue-600 transition-colors p-3'>ADD</Button></NavLink>
+            <NavLink to='/delete'><Button className='cursor-pointer hover:bg-blue-600 transition-colors p-3'>DELETE</Button></NavLink>
+           <NavLink to='/update'> <Button className='cursor-pointer hover:bg-blue-600 transition-colors p-3'>UPDATE</Button></NavLink>
+            <NavLink to='/getallproduct'><Button className='cursor-pointer hover:bg-blue-600 transition-colors p-3 whitespace-nowrap'>GET ALL PRODUCT</Button></NavLink>
         </div>
     </div>
 
